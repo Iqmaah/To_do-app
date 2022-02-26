@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const usersController  = require('../controllers/users.controllers')
-const {authentication} = require('../middlewares/authentication')
 
+
+
+router.put("/update-todo/:id", usersController.UpdateMyTodo)
 
 
 

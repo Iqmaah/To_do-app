@@ -1,37 +1,50 @@
 require('dotenv').config()
-const { v4: uuidv4 } = require('uuid')
-const { Op } = require('sequelize')
-const Joi = require('Joi')
-const bcrypt = require('bcrypt')
-const util = require('util')
-const { isEmpty, doSomeAsyncMagik } = require('../utils/utils')
-const saltRounds = 10
-
-const smsServices = require('../services/sms.services')
-const emailServices = require('../services/email.services')
+const Joi = require('joi')
 const usersModel = require('../models/users.models')
-const logger = require('../logger')
 
-const hashMyPassword = (mypassword) => {
-    
-    return new Promise((resolve, reject) => {
 
-        bcrypt.genSalt(saltRounds,  (err, salt)=> {
-            bcrypt.hash(mypassword, salt,  (err, hash)=> {
-                if (err) {
-                    reject(err)
-                }
-                resolve([salt, hash])
-            });
-        });
- 
+const UpdateMyTodo = async(req, res) => {
+   const {todo_id} = req.params
 
+    const {title, contents, todo_date, todo_time} = req.body
+
+    const updateSchema = Joi.object({
+        title: Joi.string(),
+        contents: Joi.string(),
+        todo_date: Joi.string(),
+        todo_time: Joi.string()
     })
+
+    const responseUpdateSchema = updateSchema.validate(req.body)
+    if(responseUpdateSchema.error){
+        res.status(422).send({
+            status: false,
+            message: responseUpdateSchema.error.details[0].message        
+        })
+    }
+    usersModel.UpdateTodo(title, contents, todo_date, todo_time, todo_id)
+    .then((responseUpdateTodo)=>{
+        if(responseUpdateTodo){
+            res.status(200).send({
+                status: true,
+                message: "Todo updated successfully"
+            })
+            
+        }
+    })
+    .catch((error)=>{
+        res.status(422).send({
+            status: false,
+            message: error.message
+        })
+       
+    })
+
+    
 }
 
 
 
-
 module.exports = {
-    hashMyPassword
+    UpdateMyTodo
 }

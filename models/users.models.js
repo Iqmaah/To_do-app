@@ -21,7 +21,22 @@ const getUserDetailsByEmail =  async ( email) => {
     })
 }
 
+const UpdateTodo = async(title, contents, todo_date, todo_time, todo_id)=> {
+    return new Promise((resolve, reject)=>{
+        mysqlConnection.query({
+            sql: "Update todos set title=?, contents=?, todo_date=?, todo_time=?where todo_id=todo_id",
+            values: [title, contents, todo_date, todo_time, todo_id]
+        }, (error, results, fields) =>{
+           if(error){reject(error)}
+           resolve(results)
+        })
+    })
+}
+
+
+
 
 module.exports = {
-    getUserDetailsByEmail
+    getUserDetailsByEmail,
+    UpdateTodo
 }
