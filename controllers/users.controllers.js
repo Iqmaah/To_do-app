@@ -24,13 +24,14 @@ const UpdateMyTodo = async(req, res) => {
     }
     usersModel.UpdateTodo(title, contents, todo_date, todo_time, todo_id)
     .then((responseUpdateTodo)=>{
-        if(responseUpdateTodo){
-            res.status(200).send({
-                status: true,
-                message: "Todo updated successfully"
-            })
-            
+        if(responseUpdateTodo.length == 0 ){
+            throw new Error("Invalid details")
         }
+        res.status(200).send({
+            status: true,
+            message: "Todo updated successfully"
+        })
+        
     })
     .catch((error)=>{
         res.status(422).send({
