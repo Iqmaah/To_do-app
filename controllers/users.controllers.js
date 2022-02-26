@@ -1,5 +1,5 @@
 require('dotenv').config()
-
+const { v4: uuidv4 } = require('uuid') 
 const usersModel = require('../models/users.models')
 
 
@@ -7,11 +7,11 @@ const searchTodoApp = (req, res) => {
 const { todo_date } = req.params
 
 
-//console.log('am here', date)
+
 usersModel.searchTodobyDate(todo_date)
 
 .then((searchTodo) =>{
-    console.log('......... ',searchTodo)
+   
     if(searchTodo.length ==  0){
         throw new Error('there is no schedule for today')
     }

@@ -5,7 +5,7 @@ const usersController  = require('../controllers/users.controllers')
 
 
 
-router.get('/search/todo/:date', usersController.searchTodoApp)
+router.get('/search/todo/:todo_date', usersController.searchTodoApp)
 
 
 

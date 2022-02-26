@@ -8,7 +8,7 @@ const searchTodobyDate =  async ( todo_date) => {
     return new Promise((resolve, reject) => {
 
         mysqlConnection.query({
-            sql: `select * from todos where todo_date='2022-02-26'`,
+            sql: `select * from todos where todo_date=?`,
             values: [todo_date]
         },
           (err, results, fields) => {
