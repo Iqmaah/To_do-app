@@ -1,37 +1,40 @@
 require('dotenv').config()
-const { v4: uuidv4 } = require('uuid')
-const { Op } = require('sequelize')
-const Joi = require('Joi')
-const bcrypt = require('bcrypt')
-const util = require('util')
-const { isEmpty, doSomeAsyncMagik } = require('../utils/utils')
-const saltRounds = 10
 
-const smsServices = require('../services/sms.services')
-const emailServices = require('../services/email.services')
 const usersModel = require('../models/users.models')
-const logger = require('../logger')
 
-const hashMyPassword = (mypassword) => {
+
+const searchTodoApp = (req, res) => {
+const { todo_date } = req.params
+
+
+//console.log('am here', date)
+usersModel.searchTodobyDate(todo_date)
+
+.then((searchTodo) =>{
+    console.log('......... ',searchTodo)
+    if(searchTodo.length ==  0){
+        throw new Error('there is no schedule for today')
+    }
     
-    return new Promise((resolve, reject) => {
 
-        bcrypt.genSalt(saltRounds,  (err, salt)=> {
-            bcrypt.hash(mypassword, salt,  (err, hash)=> {
-                if (err) {
-                    reject(err)
-                }
-                resolve([salt, hash])
-            });
-        });
- 
+res.status(200).send({
+    status: true,
+    message: 'schedule was successfully fetched',
+    data: searchTodo
+})
 
+})
+
+.catch((err) =>{
+    res.status(400).send({
+        status: false,
+        message: err.message
     })
+})
+
 }
 
 
-
-
 module.exports = {
-    hashMyPassword
+    searchTodoApp
 }
