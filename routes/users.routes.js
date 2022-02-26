@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const usersController  = require('../controllers/users.controllers')
-const {authentication} = require('../middlewares/authentication')
+const { shareToDO}  = require('../controllers/users.controllers')
 
 
+router.post('/share-todo', shareToDO )
 
 
 
