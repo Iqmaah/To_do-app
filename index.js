@@ -1,11 +1,11 @@
 require("dotenv").config()
 const express = require('express')
+const displayRoutes = require('express-routemap')
 const app = express()
 const userRoutes = require('./routes/users.routes')
 const bodyParser = require('body-parser')
-const mysqlConnection = require('./config/mysql')
+const mySqlConnection = require('./config/mysql')
 const{v4:uuidv4} = require('uuid')
-const userRoutes = require('./routes/users.routes')
 
 const port = process.env.PORT
 app.use(bodyParser.json())
@@ -16,11 +16,9 @@ mySqlConnection.connect(err => {
     console.log('successfully connected: ' , mySqlConnection.threadId)
   })
 
-app.use(userRoutes)
-
 app.listen(port, () => {
     console.log(`listening on ${port}`)
-     //displayRoutes(app)
+     displayRoutes(app)
 })
 
 

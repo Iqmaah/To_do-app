@@ -8,6 +8,28 @@ const Joi = require('joi')
 const usersModel = require('../models/users.models')
 
 
+const DeleteMyTodo = (req, res) => {
+    const { todo_id } = req.params
+    usersModel.DeleteTodo(todo_id)
+        .then(response => {
+            if (response.affectedRows == 0)
+                throw new Error("Invalid Id")
+
+            res.status(200).send({
+                status: true,
+                message: "Todo deleted succesfully",
+                data: []
+            })
+        })
+        .catch(err => {
+            res.status(422).send({
+                status: false,
+                message: err.message
+            })
+        })
+
+}
+    
 const addTodo = (req, res) =>{
     
     const { title, contents, todo_date, todo_time } = req.body
@@ -143,7 +165,7 @@ const listOneTodo = ((req,res) => {
 
 })
 
-}
+
 
 
 

@@ -5,7 +5,6 @@ const { shareToDO}  = require('../controllers/users.controllers')
 const usersController  = require('../controllers/users.controllers')
 
 router.post('/share-todo', shareToDO )
-
 router.post('/todo/add', usersController.addTodo)
 router.delete('/delete/:todo_id', usersController.DeleteMyTodo)
 router.get('/list-all-todos', usersController.listAllTodos)
