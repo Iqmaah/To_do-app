@@ -8,8 +8,16 @@ const mySqlConnection= require('./config/mysql')
 const userRoutes = require('./routes/users.routes')
 
 
+
 const port =process.env.PORT
 app.use(bodyParser.json())
+app.use(userRoutes)
+
+
+mySqlConnection.connect(err => {
+    if (err) throw err.stack
+    console.log('successfully connected: ' , mySqlConnection.threadId)
+  })
 
 app.use(userRoutes)
 
