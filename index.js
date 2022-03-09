@@ -14,7 +14,6 @@ const port = process.env.PORT
 
 app.use(bodyParser.json())
 app.use(userRoutes)
-app.use(routes)
 
 
 mySqlConnection.connect(err => {
