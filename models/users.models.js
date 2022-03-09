@@ -90,6 +90,20 @@ const fetchTodo = async (todoID) =>{
     })
 }
 
+const UpdateTodo = async(title, contents, todo_date, todo_time, todo_id)=> {
+    return new Promise((resolve, reject)=>{
+        mysqlConnection.query({
+            sql: "Update todos set title=?, contents=?, todo_date=?, todo_time=?where todo_id=todo_id",
+            values: [title, contents, todo_date, todo_time, todo_id]
+        }, (error, results, fields) =>{
+           if(error){reject(error)}
+           resolve(results)
+        })
+    })
+}
+
+
+// commment on this line
 
 module.exports = {
    
@@ -97,5 +111,6 @@ module.exports = {
     DeleteTodo,
     fetchTodo,
     getAllTodos,
-    getOneTodo
+    getOneTodo,
+    UpdateTodo
 }
