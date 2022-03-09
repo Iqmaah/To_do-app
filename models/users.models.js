@@ -54,8 +54,9 @@ const getAllTodos =  async () => {
     })
 }
 
+
 const getOneTodo =  async (todo_id) => {
-   
+  
     return new Promise((resolve, reject) => {
 
         mysqlConnection.query({
@@ -71,7 +72,8 @@ const getOneTodo =  async (todo_id) => {
                 }
         )
     })
-}
+ }
+    
 
 const fetchTodo = async (todoID) =>{
 
@@ -79,12 +81,16 @@ const fetchTodo = async (todoID) =>{
 
         mysqlConnection.query({
             sql: `select * from todos where todo_id=?`,
-            values: [todoID]
+            values: [todoID],
+            sql: `select * from todos where todo_date=?`,
+            values: [todo_date]
+
         },
           (err, results, fields) => {
                 if (err) {
                  reject(err)
                 }
+                console.log(results)
                 resolve(results)
           })
     })
@@ -102,8 +108,25 @@ const UpdateTodo = async(title, contents, todo_date, todo_time, todo_id)=> {
     })
 }
 
+const searchTodobyDate = async (todo_date) =>{
 
-// commment on this line
+    return new Promise((resolve, reject) => {
+
+        mysqlConnection.query({
+            sql: `select * from todos where todo_date=?`,
+            values: [todo_date]
+
+        },
+          (err, results, fields) => {
+                if (err) {
+                 reject(err)
+                }
+                console.log(results)
+                resolve(results)
+          })
+    })
+} 
+
 
 module.exports = {
    
@@ -112,5 +135,8 @@ module.exports = {
     fetchTodo,
     getAllTodos,
     getOneTodo,
-    UpdateTodo
+    UpdateTodo,
+    searchTodobyDate
+    
 }
+

@@ -12,6 +12,7 @@ router.put("/update-todo/:id", usersController.UpdateMyTodo)
 
 
 
+router.get('/search/todo/:todo_date', usersController.searchTodoApp)
 
 
 
